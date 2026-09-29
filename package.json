@@ -1,0 +1,23 @@
+{
+  "name": "tugas1-restful-2428240101",
+  "version": "1.0.0",
+  "description": "RESTful API Reservasi Ruang Rapat - Tugas 1 SI5B",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "keywords": [
+    "express",
+    "restful-api",
+    "meeting-reservations"
+  ],
+  "author": "Yonathan Rinfi",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

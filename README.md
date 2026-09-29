@@ -36,9 +36,12 @@ Contoh request body:
 }
 ```
 
-## Menjalankan secara lokal
+## Persyaratan dan menjalankan secara lokal
+
+Project menggunakan Node.js 24 LTS. File `.nvmrc` membantu memilih versi tersebut jika memakai nvm.
 
 ```bash
+nvm use
 npm install
 npm run dev
 ```

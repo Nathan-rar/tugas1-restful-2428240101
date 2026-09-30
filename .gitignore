@@ -4,3 +4,6 @@ node_modules/
 .env.*.local
 .DS_Store
 .vercel
+/evidence/
+/evidence-*.png
+Laporan_Praktikum_RESTful_API_2428240101.docx

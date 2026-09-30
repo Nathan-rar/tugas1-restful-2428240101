@@ -10,19 +10,23 @@
   "item": [
     {
       "name": "GET - Info API",
-      "request": { "method": "GET", "url": "{{baseUrl}}/" }
+      "request": { "method": "GET", "url": "{{baseUrl}}/" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 200 - Info API', function () { pm.response.to.have.status(200); });", "pm.test('Memuat metadata Topik 28', function () { const data = pm.response.json(); pm.expect(data.nomorTopik).to.eql(28); pm.expect(data.nim).to.eql('2428240101'); });"] } }]
     },
     {
       "name": "GET - Semua reservasi",
-      "request": { "method": "GET", "url": "{{baseUrl}}/meeting-reservations" }
+      "request": { "method": "GET", "url": "{{baseUrl}}/meeting-reservations" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 200 - Data reservasi', function () { pm.response.to.have.status(200); });", "pm.test('Response berupa array', function () { pm.expect(pm.response.json()).to.be.an('array'); });"] } }]
     },
     {
       "name": "GET - Reservasi berdasarkan ID",
-      "request": { "method": "GET", "url": "{{baseUrl}}/meeting-reservations/1" }
+      "request": { "method": "GET", "url": "{{baseUrl}}/meeting-reservations/1" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 200 - Detail reservasi', function () { pm.response.to.have.status(200); });", "pm.test('ID reservasi benar', function () { pm.expect(pm.response.json().id).to.eql(1); });"] } }]
     },
     {
       "name": "GET - Filter tanggal",
-      "request": { "method": "GET", "url": "{{baseUrl}}/meeting-reservations?tanggal=2026-10-05" }
+      "request": { "method": "GET", "url": "{{baseUrl}}/meeting-reservations?tanggal=2026-10-05" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 200 - Filter tanggal', function () { pm.response.to.have.status(200); });", "pm.test('Semua hasil sesuai tanggal', function () { pm.response.json().forEach(item => pm.expect(item.tanggal).to.eql('2026-10-05')); });"] } }]
     },
     {
       "name": "POST - Tambah reservasi (201)",
@@ -31,7 +35,8 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\n  \"namaPemesan\": \"PT Maju Digital\",\n  \"ruang\": \"Ruang Kenanga\",\n  \"tanggal\": \"2026-10-05\",\n  \"jamMulai\": \"13:00\",\n  \"durasiJam\": 2\n}", "options": { "raw": { "language": "json" } } },
         "url": "{{baseUrl}}/meeting-reservations"
-      }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 201 - Reservasi dibuat', function () { pm.response.to.have.status(201); });", "pm.test('Response menyertakan ID baru', function () { pm.expect(pm.response.json().data.id).to.be.a('number'); });"] } }]
     },
     {
       "name": "POST - Gagal field wajib kosong (400)",
@@ -40,7 +45,8 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\n  \"namaPemesan\": \"\",\n  \"ruang\": \"Ruang Kenanga\",\n  \"tanggal\": \"2026-10-05\",\n  \"jamMulai\": \"13:00\",\n  \"durasiJam\": 2\n}", "options": { "raw": { "language": "json" } } },
         "url": "{{baseUrl}}/meeting-reservations"
-      }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 400 - Validasi field wajib', function () { pm.response.to.have.status(400); });", "pm.test('Error response JSON', function () { pm.expect(pm.response.json().status).to.eql('error'); });"] } }]
     },
     {
       "name": "PUT - Perbarui reservasi (200)",
@@ -49,7 +55,8 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\n  \"namaPemesan\": \"PT Maju Digital Baru\",\n  \"ruang\": \"Ruang Kenanga\",\n  \"tanggal\": \"2026-10-05\",\n  \"jamMulai\": \"14:00\",\n  \"durasiJam\": 2\n}", "options": { "raw": { "language": "json" } } },
         "url": "{{baseUrl}}/meeting-reservations/1"
-      }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 200 - Reservasi diperbarui', function () { pm.response.to.have.status(200); });", "pm.test('Nama hasil update benar', function () { pm.expect(pm.response.json().data.namaPemesan).to.eql('PT Maju Digital Baru'); });"] } }]
     },
     {
       "name": "PUT - ID tidak ditemukan (404)",
@@ -58,19 +65,23 @@
         "header": [{ "key": "Content-Type", "value": "application/json" }],
         "body": { "mode": "raw", "raw": "{\n  \"namaPemesan\": \"PT Contoh\",\n  \"ruang\": \"Ruang Kenanga\",\n  \"tanggal\": \"2026-10-05\",\n  \"jamMulai\": \"13:00\",\n  \"durasiJam\": 2\n}", "options": { "raw": { "language": "json" } } },
         "url": "{{baseUrl}}/meeting-reservations/999"
-      }
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 404 - ID tidak ditemukan', function () { pm.response.to.have.status(404); });"] } }]
     },
     {
       "name": "DELETE - Hapus reservasi (200)",
-      "request": { "method": "DELETE", "url": "{{baseUrl}}/meeting-reservations/3" }
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/meeting-reservations/3" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 200 - Reservasi dihapus', function () { pm.response.to.have.status(200); });"] } }]
     },
     {
       "name": "DELETE - ID tidak ditemukan (404)",
-      "request": { "method": "DELETE", "url": "{{baseUrl}}/meeting-reservations/999" }
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/meeting-reservations/999" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 404 - ID tidak ditemukan', function () { pm.response.to.have.status(404); });"] } }]
     },
     {
       "name": "GET - Endpoint tidak ditemukan (404 JSON)",
-      "request": { "method": "GET", "url": "{{baseUrl}}/endpoint-salah" }
+      "request": { "method": "GET", "url": "{{baseUrl}}/endpoint-salah" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('HTTP 404 - Endpoint tidak tersedia', function () { pm.response.to.have.status(404); });", "pm.test('Response error JSON', function () { pm.expect(pm.response.json().message).to.eql('Endpoint tidak ditemukan'); });"] } }]
     }
   ]
 }

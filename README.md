@@ -48,14 +48,10 @@ npm run dev
 
 Server lokal berjalan di `http://localhost:3000`.
 
-## Pengujian API
+## Pengujian
 
-Import `postman_collection.json` ke Postman. Jalankan request pada URL lokal atau ganti base URL ke URL Vercel setelah deployment. Sertakan screenshot request, response JSON, dan status code pada laporan.
-
-## GitHub dan Vercel
-
-- Repository publik: `https://github.com/USERNAME/tugas1-restful-2428240101` (ganti `USERNAME` setelah repository dibuat)
-- URL Vercel: belum dideploy
+- Postman: koleksi `postman_collection.json` (11 request, 19 assertion; hasil terbaru 19/19 lulus).
+- Thunder Client: `thunder-collection.json` berisi request validasi 400 dan endpoint 404. Import file tersebut ke VS Code.
 
 ## Catatan
 

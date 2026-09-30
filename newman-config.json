@@ -1,0 +1,7 @@
+{
+  "reporter": [
+    "cli",
+    "json"
+  ],
+  "export": "test-results-postman.json"
+}
